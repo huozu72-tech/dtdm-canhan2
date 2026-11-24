@@ -1,0 +1,77 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<div class="page-header">
+    <div class="header-title"><h1>Quản Lý Đơn Hàng</h1></div>
+    <div class="header-actions">
+        <button class="btn btn-danger" onclick="deleteSelectedOrders()" id="btnDeleteSelected" style="display:none;"><i class="fas fa-trash"></i> Xoá Đã Chọn</button>
+        <button class="btn btn-danger" onclick="deleteAllOrders()"><i class="fas fa-trash-alt"></i> Xoá Tất Cả</button>
+        <button class="btn btn-primary" onclick="loadOrders()"><i class="fas fa-sync-alt"></i> Làm Mới</button>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="deskapp-table" id="ordersTable">
+                <thead>
+                    <tr>
+                        <th style="width: 40px; text-align: center;"><input type="checkbox" id="selectAllOrders" onchange="toggleSelectAllOrders(this)"></th>
+                        <th>Mã Đơn</th>
+                        <th>Khách Hàng</th>
+                        <th>Ngày Giờ</th>
+                        <th>Tổng Tiền</th>
+                        <th>Trạng Thái</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="orderModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalOrderTitle">Chi Tiết Đơn Hàng</h3>
+            <span class="close-btn" onclick="closeOrderModal()">&times;</span>
+        </div>
+        <div class="modal-body" id="printArea">
+            <div class="order-info">
+                <p><strong>Khách Hàng:</strong> <span id="modalCustomerName"></span></p>
+                <p class="no-print"><strong>Trạng Thái:</strong>
+                    <select id="modalOrderStatus" class="form-control" style="width: auto; display: inline-block;">
+                        <option value="Pending">Chờ Xử Lý</option>
+                        <option value="Confirmed">Đã Xác Nhận</option>
+                        <option value="Completed">Hoàn Thành</option>
+                    </select>
+                </p>
+                <p class="print-only" style="display:none;"><strong>Trạng Thái:</strong> <span id="modalOrderStatusText"></span></p>
+            </div>
+            <h4 style="margin-top:20px; border-bottom:1px solid #eee; padding-bottom:10px;">Danh Sách Món</h4>
+            <div class="order-items" id="modalOrderItems" style="margin-top: 10px;"></div>
+            <div class="edit-order-section no-print" style="margin-top: 20px; display:flex; gap:10px;">
+                <select id="availableMenuItems" class="form-control"></select>
+                <button class="btn btn-secondary" style="white-space:nowrap;" onclick="addItemToOrder()">Thêm Món</button>
+            </div>
+            <div class="order-total" style="margin-top:20px; text-align:right; font-size:18px;">
+                <strong>Tổng Cộng:</strong> <span id="modalOrderTotal" style="color:var(--primary);">0 đ</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" onclick="saveOrderChanges()">Lưu Thay Đổi</button>
+            <button class="btn btn-success" onclick="printInvoice()"><i class="fas fa-print"></i> In Hoá Đơn</button>
+            <button class="btn btn-danger" onclick="deleteOrder()">Xoá Đơn Này</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    loadOrders();
+    loadAvailableMenuForEditing();
+});
+</script>
+{% endblock %}

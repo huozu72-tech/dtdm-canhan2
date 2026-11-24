@@ -1,0 +1,15 @@
+[Unit]
+Description=Nha Hang AI Web Application (FastAPI + Uvicorn, MSSV 2324802010383)
+After=network.target postgresql.service
+
+[Service]
+User=tri2324802010383
+Group=tri2324802010383
+WorkingDirectory=/opt/dathang-ai
+EnvironmentFile=/opt/dathang-ai/.env
+ExecStart=/opt/dathang-ai/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

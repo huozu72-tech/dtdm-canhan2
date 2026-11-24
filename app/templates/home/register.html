@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký - Nhà Hàng AI (MSSV: 2324802010383)</title>
+    <link rel="stylesheet" href="/css/kieu_dang.css">
+</head>
+<body>
+<div class="ung_dung">
+    <header class="tieu_de_chinh">
+        <h1><a href="/Home/Index" style="color:white; text-decoration:none;">Nhà Hàng AI</a></h1>
+        <p style="font-size:13px; opacity:0.9;">VPS: vps-2324802010383 · SV: Võ Đại Minh Trí (2324802010383)</p>
+    </header>
+    <main class="noi_dung_chinh">
+        <div class="khung_xac_thuc">
+            <h2>Tạo Tài Khoản Mới</h2>
+            <form action="/Home/TaoTaiKhoan" method="post">
+                {% if error %}
+                <div style="color: white; background-color: #f44336; padding: 10px; margin-bottom: 15px; border-radius: 5px; text-align: center;">{{ error }}</div>
+                {% endif %}
+                <div class="nhom_dau_vao">
+                    <label for="ho_ten">Họ và Tên</label>
+                    <input type="text" id="ho_ten" name="ho_ten" required placeholder="Nhập họ và tên thật của bạn">
+                </div>
+                <div class="nhom_dau_vao">
+                    <label for="sdt">Số Điện Thoại</label>
+                    <input type="tel" id="sdt" name="sdt" required placeholder="Nhập số điện thoại hợp lệ">
+                </div>
+                <div class="nhom_dau_vao">
+                    <label for="mat_khau">Mật Khẩu</label>
+                    <input type="password" id="mat_khau" name="mat_khau" required placeholder="Tạo mật khẩu an toàn">
+                </div>
+                <button type="submit" class="nut_xac_thuc">Đăng Ký</button>
+                <div class="lien_ket_xac_thuc">
+                    Đã có tài khoản? <a href="/Home/Login">Đăng Nhập Ngay</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

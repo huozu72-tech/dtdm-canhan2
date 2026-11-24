@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Của Tôi - Nhà Hàng AI (2324802010383)</title>
+    <link rel="stylesheet" href="/css/kieu_dang.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f3f4f6; margin: 0; color: #333; }
+        .profile-container { max-width: 680px; margin: 40px auto; background: #fff; box-shadow: 0 12px 30px rgba(0,0,0,0.08); border-radius: 16px; overflow: hidden; }
+        .profile-header { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); padding: 32px; text-align: center; color: #fff; }
+        .profile-body { padding: 24px 40px 36px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; }
+        .btn-update { background: #f23b05; color: #fff; border: none; padding: 14px; width: 100%; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; }
+        .alert-success { background: #dcfce7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 16px; text-align: center; }
+        .alert-error { background: #fee2e2; color: #991b1b; padding: 12px; border-radius: 8px; margin-bottom: 16px; text-align: center; }
+    </style>
+</head>
+<body>
+<div class="profile-container">
+    <div class="profile-header">
+        <h1>Hồ Sơ Của Tôi</h1>
+        <p>Nhà Hàng AI · VPS vps-2324802010383</p>
+    </div>
+    <div class="profile-body">
+        {% if error %}<div class="alert-error">{{ error }}</div>{% endif %}
+        {% if success %}<div class="alert-success">{{ success }}</div>{% endif %}
+        <form action="/Home/Profile" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="HoTen">Họ và Tên</label>
+                <input type="text" id="HoTen" name="HoTen" value="{{ user.ho_ten }}" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="SoDienThoai">Số Điện Thoại</label>
+                <input type="tel" id="SoDienThoai" name="SoDienThoai" value="{{ user.so_dien_thoai }}" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="DiaChi">Địa Chỉ</label>
+                <input type="text" id="DiaChi" name="DiaChi" value="{{ user.dia_chi or '' }}" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="MatKhau">Mật Khẩu Mới (Tùy chọn)</label>
+                <input type="password" id="MatKhau" name="MatKhau" class="form-control" placeholder="Để trống nếu không đổi" />
+            </div>
+            <button type="submit" class="btn-update">Lưu Thay Đổi</button>
+            <p style="text-align:center; margin-top:16px;"><a href="/Home/Index">← Trở về Trang Chủ</a></p>
+        </form>
+    </div>
+</div>
+</body>
+</html>

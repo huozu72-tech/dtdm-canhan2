@@ -1,0 +1,87 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<div class="welcome-banner">
+    <div class="welcome-text">
+        <h2>Xin Chào Quản Trị Viên</h2>
+        <h1 style="color:var(--primary);">{{ admin_name }}</h1>
+    </div>
+</div>
+
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <div class="circle-progress" style="--val:80%; --clr:var(--primary);"><span>80%</span></div>
+        <div class="stat-info"><h3 id="statDonHang">...</h3><p>Liên Hệ / Đơn</p></div>
+    </div>
+    <div class="stat-card">
+        <div class="circle-progress" style="--val:70%; --clr:#00b894;"><span>70%</span></div>
+        <div class="stat-info"><h3 id="statKhachCho">...</h3><p>Đơn Đang Chờ</p></div>
+    </div>
+    <div class="stat-card">
+        <div class="circle-progress" style="--val:75%; --clr:#ff7675;"><span>75%</span></div>
+        <div class="stat-info"><h3 id="statMonAn">...</h3><p>Sản Phẩm Món</p></div>
+    </div>
+    <div class="stat-card">
+        <div class="circle-progress" style="--val:85%; --clr:#0984e3;"><span>85%</span></div>
+        <div class="stat-info"><h3 id="statDoanhThu">...</h3><p>Doanh Thu</p></div>
+    </div>
+</div>
+
+<div class="charts-wrapper" style="margin-top: 30px; display:flex; gap:30px;">
+    <div class="card" style="flex:2;">
+        <div class="card-header" style="display:flex; justify-content:space-between;">
+            <h3>Hoạt Động Phân Tích (Hoàn Thành vs Đang Xử Lý)</h3>
+            <div style="font-size:12px; color:#555;">
+                <span style="color:#0984e3">● </span> In Progress &nbsp;
+                <span style="color:#ff7675">● </span> Complete
+            </div>
+        </div>
+        <div class="card-body">
+            <canvas id="activityChart" style="height:250px; width:100%;"></canvas>
+        </div>
+    </div>
+    <div class="card" style="flex:1;">
+        <div class="card-header"><h3>Mục Tiêu Doanh Thu</h3></div>
+        <div class="card-body" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:250px;">
+            <div class="circle-progress large" style="--val:73%; --clr:#2d3436; width:150px; height:150px; font-size:24px;"><span>73%</span></div>
+            <p style="margin-top:20px; color:#555;">Achieve Goals</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/api/admin/dashboard-stats')
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('statDonHang').textContent = data.contacts;
+            document.getElementById('statKhachCho').textContent = data.deals;
+            document.getElementById('statMonAn').textContent = data.campaign;
+            document.getElementById('statDoanhThu').textContent = Number(data.worth || 0).toLocaleString('vi-VN') + ' đ';
+        });
+
+    fetch('/api/admin/chart-data')
+        .then(res => res.json())
+        .then(data => {
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [
+                        { label: 'In Progress', data: data.inProgress, backgroundColor: '#0984e3', borderRadius: 4 },
+                        { label: 'Complete', data: data.completed, backgroundColor: '#ff7675', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        });
+});
+</script>
+{% endblock %}

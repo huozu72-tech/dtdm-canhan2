@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhà Hàng Việt - Đặt Món AI (MSSV: 2324802010383)</title>
+    <link rel="stylesheet" href="/css/kieu_dang.css?v=2.2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<div class="ung_dung">
+    <nav class="nav_dieu_huong">
+        <div class="nav_trai">
+            <h2 class="logo_nhahang"><i class="fas fa-utensils" style="margin-right:8px; color: #f23b05;"></i> Nhà Hàng Việt</h2>
+            <div class="nut_gio_hang_nav" id="nut_mo_gio_hang" style="margin-left: 20px;">
+                <i class="fas fa-shopping-cart"></i> Giỏ Hàng <span id="so_luong_gio_hang" class="huy_hieu_nav">0</span>
+            </div>
+            <div class="nut_gio_hang_nav" id="nut_mo_thanh_toan" style="margin-left: 10px;">
+                <i class="fas fa-file-invoice-dollar"></i> Thanh Toán <span id="so_luong_don_cho" class="huy_hieu_nav">0</span>
+            </div>
+        </div>
+        <div class="nav_phai">
+            <a href="/Admin/Admin/Menu" class="link_nav admin_link"><i class="fas fa-user-shield"></i> Quản Lý Admin</a>
+            {% if not user_name %}
+                <a href="/Home/Login" class="link_nav dang_nhap">Đăng nhập</a>
+                <a href="/Home/TaoTaiKhoan" class="btn_dang_ky">Đăng ký</a>
+            {% else %}
+                <div class="dropdown" style="display:inline-block; position:relative; margin-left:15px; cursor:pointer;" onclick="document.getElementById('user_dropdown').classList.toggle('show')">
+                    <a style="color:#f23b05; font-weight:bold;"><i class="fas fa-user-circle"></i> {{ user_name }} <i class="fas fa-caret-down"></i></a>
+                    <div id="user_dropdown" class="dropdown-content">
+                        {% if has_customer_id %}
+                        <a href="/Home/Profile"><i class="fas fa-id-card"></i> Thông tin</a>
+                        {% endif %}
+                        <a href="/Home/Logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <header class="tieu_de_chinh banner_moi">
+        <div class="icon_bep"><i class="fas fa-utensils"></i></div>
+        <div class="text_banner">
+            <h1>Chào mừng đến Nhà Hàng Việt</h1>
+            <p>Hương vị Việt Nam đích thực · Triển khai trên VPS <strong>vps-2324802010383</strong> (MSSV: 2324802010383)</p>
+        </div>
+    </header>
+
+    <main class="noi_dung_chinh">
+        <section class="khu_vuc_menu">
+            <h2><i class="fas fa-utensils"></i> Thực Đơn Nhà Hàng</h2>
+            <div class="danh_muc_tabs">
+                <button class="nut_tab tab_active" data-loai="tat_ca">Tất Cả</button>
+                <button class="nut_tab" data-loai="mon_chinh">Món Chính</button>
+                <button class="nut_tab" data-loai="mon_phu">Món Phụ</button>
+                <button class="nut_tab" data-loai="nuoc_uong">Nước Uống</button>
+            </div>
+            <div class="luoi_mon_an" id="danh_sach_menu"></div>
+        </section>
+
+        <section class="khu_vuc_quet_anh" style="margin-top:24px;">
+            <h2><i class="fas fa-camera"></i> AI Đếm Món &amp; Phân Tích</h2>
+            <div class="khung_tai_anh" id="khung_tai_anh">
+                <input type="file" id="chon_anh" accept="image/*" hidden>
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <button type="button" id="nut_mo_camera" class="nut_chon_anh" style="border: none; outline: none; display: flex; align-items: center; gap: 8px;">
+                        <span class="bieu_tuong">📷</span> Chụp Ảnh
+                    </button>
+                    <label for="chon_anh" class="nut_chon_anh" style="margin: 0; display: flex; align-items: center; gap: 8px;">
+                        <span class="bieu_tuong">📁</span> Thêm Ảnh
+                    </label>
+                </div>
+                <div id="hien_thi_anh_vung">
+                    <img id="anh_da_chon" src="" alt="Ảnh món ăn" style="display: none;">
+                </div>
+            </div>
+            <div id="trang_thai_ai" class="an">
+                <div class="bieu_tuong_tai"></div>
+                <p>AI đang phân tích món ăn...</p>
+            </div>
+            <div id="ket_qua_ai" class="an">
+                <h3 style="color:#e65100;">Kết Quả Phân Tích:</h3>
+                <div id="danh_sach_ket_qua_ai"></div>
+            </div>
+        </section>
+
+        <div id="modal_gio_hang" class="modal_an">
+            <div class="noi_dung_modal">
+                <div class="tieu_de_modal">
+                    <h2><i class="fas fa-shopping-cart"></i> Giỏ Hàng Của Bạn</h2>
+                    <span class="dong_modal" id="nut_dong_gio_hang">&times;</span>
+                </div>
+                <div id="danh_sach_gio_hang" class="danh_sach_trong">
+                    <p class="thong_bao_trong">Giỏ hàng đang trống.</p>
+                </div>
+                <div class="tom_tat_don_hang" id="tom_tat_don_hang" style="display: none;">
+                    <div class="tong_tien_dong">
+                        <span>Tổng tiền:</span>
+                        <strong id="tong_tien">0 đ</strong>
+                    </div>
+                    <button id="nut_xac_nhan_dat" class="nut_hanh_dong nut_xac_nhan">Xác Nhận Đặt Món</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal_thanh_toan" class="modal_an">
+            <div class="noi_dung_modal" style="max-width: 500px;">
+                <div class="tieu_de_modal" style="position: relative;">
+                    <h2><i class="fas fa-file-invoice-dollar"></i> Hóa Đơn Chờ Thanh Toán</h2>
+                    <span class="dong_modal" id="nut_dong_thanh_toan" style="position: absolute; right: 0;">&times;</span>
+                </div>
+                <div id="man_hinh_danh_sach_don">
+                    <div id="danh_sach_don_cho" style="margin-top: 15px;">
+                        <p class="thong_bao_trong">Không có hóa đơn nào đang chờ.</p>
+                    </div>
+                </div>
+                <div id="man_hinh_quet_qr" style="display: none; text-align: center;">
+                    <div style="margin: 20px 0;">
+                        <p>Vui lòng thanh toán số tiền:</p>
+                        <h3 id="tong_tien_thanh_toan" style="color: #f23b05; font-size: 24px; margin: 10px 0;">0 đ</h3>
+                        <div style="margin: 20px auto; padding: 20px; background: #f9f9f9; border-radius: 10px; border: 1px dashed #ccc; display: inline-block;">
+                            <i class="fas fa-qrcode" style="font-size: 80px; color: #333;"></i>
+                            <p style="margin-top: 10px; font-size: 14px; color: #666;">Quét mã QR để thanh toán</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="nut_quay_lai_danh_sach" class="nut_hanh_dong" style="background-color: #6c757d; flex: 1;">Quay Lại</button>
+                        <button id="nut_xac_nhan_thanh_toan" class="nut_hanh_dong nut_xac_nhan" style="flex: 2;">Đã Thanh Toán</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal_camera" class="modal_an">
+            <div class="noi_dung_modal" style="max-width: 500px; border-top: 4px solid #f23b05;">
+                <div class="tieu_de_modal">
+                    <h2><i class="fas fa-camera"></i> Chụp Ảnh Món Ăn</h2>
+                    <span class="dong_modal" id="nut_dong_camera">&times;</span>
+                </div>
+                <div class="khung_camera" style="position: relative; background: #000; border-radius: 8px; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 200px;">
+                    <video id="video_camera" autoplay playsinline style="width: 100%; height: auto; max-height: 350px; object-fit: cover;"></video>
+                    <canvas id="canvas_camera" style="display: none;"></canvas>
+                </div>
+                <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 12px;">
+                    <div id="vung_chon_camera" style="display: flex; align-items: center; gap: 8px;">
+                        <label for="chon_thiet_bi_camera" style="font-weight: bold; color: #555; font-size: 14px; white-space: nowrap;"><i class="fas fa-video"></i> Camera:</label>
+                        <select id="chon_thiet_bi_camera" style="flex-grow: 1; padding: 8px; border: 1px solid #ffcc80; border-radius: 6px; outline: none; font-size: 14px; max-width: 100%; cursor: pointer;">
+                            <option value="">Đang dò tìm camera...</option>
+                        </select>
+                    </div>
+                    <button id="nut_bam_chup" class="nut_hanh_dong nut_xac_nhan" style="width: 100%; background-color: #f23b05;"><i class="fas fa-camera"></i> Chụp Hình</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="chatbox_ai_nut" class="chatbox_ai_nut" title="Chat với AI">
+            <img src="/images/logo/Artboard.CJXDiwJy.png" alt="Chat AI">
+        </div>
+        <div id="chatbox_ai_khung" class="chatbox_ai_khung" style="display: none;">
+            <div class="chatbox_header">
+                <h3><i class="fas fa-headset"></i> Trợ lý AI</h3>
+                <span id="chatbox_dong">&times;</span>
+            </div>
+            <div id="chatbox_noi_dung" class="chatbox_noi_dung">
+                <div class="tin_nhan bot">Xin chào! Tôi có thể tư vấn món ăn gì cho bạn hôm nay?</div>
+            </div>
+            <div class="chatbox_nhap">
+                <input type="text" id="chatbox_input" placeholder="Nhập câu hỏi của bạn...">
+                <button id="chatbox_gui"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    window.currentUserName = {{ (user_name or "Khách vãng lai") | tojson }};
+</script>
+<script src="/js/xu_ly.js?v=2.4"></script>
+</body>
+</html>

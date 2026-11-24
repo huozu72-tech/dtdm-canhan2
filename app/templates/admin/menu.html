@@ -1,0 +1,67 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<div class="page-header">
+    <div class="header-title">
+        <h1>Quản Lý Thực Đơn</h1>
+    </div>
+    <div class="header-actions">
+        <button class="btn btn-primary" onclick="openMenuModal()"><i class="fas fa-plus"></i> Thêm Món</button>
+    </div>
+</div>
+
+<div class="filters" style="margin-bottom:20px;">
+    <button class="btn btn-primary tab-btn active" data-loai="tat_ca" onclick="filterMenu('tat_ca', this)">Tất Cả</button>
+    <button class="btn btn-secondary tab-btn" data-loai="mon_chinh" onclick="filterMenu('mon_chinh', this)">Món Chính</button>
+    <button class="btn btn-secondary tab-btn" data-loai="mon_phu" onclick="filterMenu('mon_phu', this)">Món Phụ</button>
+    <button class="btn btn-secondary tab-btn" data-loai="nuoc_uong" onclick="filterMenu('nuoc_uong', this)">Nước Uống</button>
+</div>
+
+<div class="menu-grid-container" id="menuGrid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;"></div>
+
+<div id="menuModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalMenuTitle">Thêm Món Mới</h3>
+            <span class="close-btn" onclick="closeMenuModal()">&times;</span>
+        </div>
+        <div class="modal-body" style="padding-top:15px;">
+            <form id="menuForm">
+                <input type="hidden" id="menuId">
+                <div style="margin-bottom:10px;">
+                    <label>Tên món:</label>
+                    <input type="text" id="menuTen" class="form-control" style="width:100%; padding:8px;" required>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label>Giá (VNĐ):</label>
+                    <input type="number" id="menuGia" class="form-control" style="width:100%; padding:8px;" required>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label>Loại món:</label>
+                    <select id="menuLoai" class="form-control" style="width:100%; padding:8px;">
+                        <option value="mon_chinh">Món Chính</option>
+                        <option value="mon_phu">Món Phụ</option>
+                        <option value="nuoc_uong">Nước Uống</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label>Hình ảnh (Tải lên nếu cần):</label>
+                    <input type="file" id="menuHinh" accept="image/*" class="form-control" style="width:100%; padding:8px;">
+                    <img id="menuHinhPreview" src="" alt="Xem trước" style="display:none; width:100%; max-height:150px; object-fit:cover; margin-top:10px; border-radius:8px;" />
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid #ccc; padding-top:10px; margin-top:15px;">
+            <button class="btn btn-secondary" onclick="closeMenuModal()">Huỷ</button>
+            <button class="btn btn-primary" onclick="saveMenu()">Lưu Món</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    loadMenu();
+});
+</script>
+{% endblock %}

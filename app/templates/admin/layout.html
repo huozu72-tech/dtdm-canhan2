@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }} - Nhà Hàng AI (2324802010383)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/css/admin_deskapp.css" />
+</head>
+<body>
+    <div class="deskapp-container">
+        <aside class="deskapp-sidebar">
+            <div class="brand-logo">
+                <div class="logo-dots">
+                    <span style="background:#e84118"></span>
+                    <span style="background:#4cd137"></span>
+                    <span style="background:#00a8ff"></span>
+                    <span style="background:#9c88ff"></span>
+                </div>
+                <h2>Nhà Hàng AI</h2>
+            </div>
+            <div style="padding: 8px 20px; font-size: 12px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                VPS: vps-2324802010383<br>MSSV: 2324802010383
+            </div>
+            <ul class="sidebar-menu">
+                <li class="{% if active_page == 'Index' %}active{% endif %}">
+                    <a href="/Admin/Admin/Index"><i class="fas fa-home"></i> <span>Trang chủ</span></a>
+                </li>
+                <li class="{% if active_page == 'Menu' %}active{% endif %}">
+                    <a href="/Admin/Admin/Menu"><i class="fas fa-boxes"></i> <span>Sản phẩm</span></a>
+                </li>
+                <li class="{% if active_page == 'Orders' %}active{% endif %}">
+                    <a href="/Admin/Admin/Orders"><i class="fas fa-shopping-cart"></i> <span>Đơn hàng</span></a>
+                </li>
+                <li>
+                    <a href="/Admin/Admin/GoToUserPage"><i class="fas fa-external-link-alt"></i> <span>Tới trang người dùng</span></a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="deskapp-main">
+            <header class="deskapp-header no-print">
+                <div class="header-left">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search Here">
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn" onclick="window.location.href='/Admin/Admin/Orders?showLast=true'"><i class="far fa-bell"></i></button>
+                    <div class="user-profile" style="position: relative; cursor: pointer;" onclick="document.getElementById('admin-dropdown').classList.toggle('show')">
+                        <img id="adminAvatarImg" src="https://ui-avatars.com/api/?name={{ admin_name | urlencode }}&background=2563eb&color=fff" alt="Avatar">
+                        <span class="user-name">{{ admin_name }}</span>
+                        <i class="fas fa-chevron-down"></i>
+                        <div id="admin-dropdown" class="dropdown-content" style="position: absolute; top: 100%; right: 0; background: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 4px; padding: 10px; display: none; min-width: 170px;">
+                            <label style="cursor:pointer; display:block; padding:5px 0; color:#333;"><i class="fas fa-camera"></i> Đổi ảnh đại diện
+                                <input type="file" style="display:none;" id="adminAvatarUpload" accept="image/*" onchange="uploadAdminAvatar(this)">
+                            </label>
+                            <a href="/Admin/Admin/Logout" style="color: #d11a2a; text-decoration: none; display: block; padding: 5px 0;"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                        </div>
+                    </div>
+                    <style>.user-profile .show { display: block !important; }</style>
+                </div>
+            </header>
+
+            <div class="deskapp-content">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/admin_deskapp.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

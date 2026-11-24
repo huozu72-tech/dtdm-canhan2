@@ -1,0 +1,34 @@
+.btn_dang_ky { background-color: #007bff; }
+.btn_dang_ky:hover { background-color: #0056b3; }
+.nut_gio_hang_nav { color: #004085; background: #cce5ff; }
+.nut_gio_hang_nav:hover { background: #b8daff; }
+.huy_hieu_nav { background-color: #17a2b8; }
+.tieu_de_chinh.banner_moi { background: linear-gradient(90deg, #007bff, #00d2ff); }
+.khu_vuc_quet_anh { border-color: #b8daff; box-shadow: 0 2px 8px rgba(0,123,255,0.05); }
+.khu_vuc_quet_anh h2 { color: #0056b3; }
+.khung_tai_anh { border-color: #7abaff; background-color: #e6f2ff; }
+.nut_chon_anh { background-color: #007bff; }
+.nut_chon_anh:hover { background-color: #0056b3; }
+#trang_thai_ai { color: #007bff; }
+.bieu_tuong_tai { border-color: #e6f2ff; border-top-color: #007bff; }
+#ket_qua_ai { background-color: #e6f2ff; border-color: #b8daff; }
+.thong_tin_mon_ai h4 { color: #0056b3; }
+.gia { color: #004085; }
+.nut_hanh_dong { background-color: #007bff; }
+.nut_hanh_dong:hover { background-color: #0056b3; }
+.nut_tab.tab_active { background-color: #007bff; }
+.the_tag { background-color: #e6f2ff; color: #004085; }
+.gia_va_hanh_dong .gia { color: #007bff; }
+.tieu_de_modal h2 { color: #0056b3; }
+.xoa_mon { color: #004085; }
+.tom_tat_don_hang { background-color: #e6f2ff; border-color: #b8daff; }
+.tong_tien_dong { color: #0056b3; }
+.nut_xac_nhan { background-color: #007bff; }
+.khung_xac_thuc { box-shadow: 0 4px 15px rgba(0,123,255,0.1); border-color: #b8daff; }
+.khung_xac_thuc h2 { color: #0056b3; }
+.nhom_dau_vao input { border-color: #7abaff; }
+.nut_xac_thuc { background: linear-gradient(135deg, #007bff, #17a2b8); }
+.lien_ket_xac_thuc a { color: #007bff; }
+@media (min-width: 601px) { body { background-color: #e6f2ff; } }
+.dropdown-content { border-color: #b8daff; }
+.dropdown-content a:hover { background-color: #e6f2ff; color: #007bff !important; }

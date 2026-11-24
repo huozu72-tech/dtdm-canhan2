@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - Nhà Hàng AI (MSSV: 2324802010383)</title>
+    <link rel="stylesheet" href="/css/kieu_dang.css">
+</head>
+<body>
+<div class="ung_dung">
+    <header class="tieu_de_chinh">
+        <h1><a href="/Home/Index" style="color:white; text-decoration:none;">Nhà Hàng AI</a></h1>
+        <p style="font-size:13px; opacity:0.9;">VPS: vps-2324802010383 · SV: Võ Đại Minh Trí (2324802010383)</p>
+    </header>
+    <main class="noi_dung_chinh">
+        <div class="khung_xac_thuc">
+            <h2>Đăng Nhập</h2>
+            <form action="/Home/Login" method="post">
+                {% if error %}
+                <div style="color: white; background-color: #f44336; padding: 10px; margin-bottom: 15px; border-radius: 5px; text-align: center;">{{ error }}</div>
+                {% endif %}
+                <div class="nhom_dau_vao">
+                    <label for="email">Tên Đăng Nhập / Số Điện Thoại</label>
+                    <input type="text" id="email" name="email" required placeholder="Nhập tên hoặc SĐT của bạn">
+                </div>
+                <div class="nhom_dau_vao">
+                    <label for="mat_khau">Mật Khẩu</label>
+                    <input type="password" id="mat_khau" name="mat_khau" required placeholder="Nhập mật khẩu">
+                </div>
+                <button type="submit" class="nut_xac_thuc">Đăng Nhập</button>
+                <div class="lien_ket_xac_thuc">
+                    Chưa có tài khoản? <a href="/Home/TaoTaiKhoan">Đăng Ký Ngay</a><br>
+                    <small><a href="/Admin/Admin/Login">Đăng nhập trang Quản trị (Admin)</a></small>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

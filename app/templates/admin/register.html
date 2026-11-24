@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Admin - Nhà Hàng AI (2324802010383)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #f3f4f6; padding: 20px; }
+        .split-layout { display: flex; flex-direction: row; background: #fff; width: 100%; max-width: 980px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; min-height: 560px; }
+        .image-pane { flex: 1; background-color: #e0e7ff; display: flex; align-items: center; justify-content: center; padding: 40px; }
+        .image-pane img { max-width: 100%; height: auto; object-fit: contain; }
+        .form-pane { flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
+        .auth-header { margin-bottom: 24px; }
+        .auth-header h1 { font-size: 32px; font-weight: 700; color: #1e40af; margin-bottom: 6px; }
+        .auth-header p { color: #64748b; font-size: 14px; }
+        .input-group { display: flex; flex-direction: column; margin-bottom: 16px; }
+        .input-group label { color: #334155; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+        .input-group input { width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; padding: 13px 16px; border-radius: 10px; font-size: 15px; outline: none; }
+        .submit-btn { width: 100%; padding: 15px; background: #2563eb; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .auth-footer { text-align: center; margin-top: 20px; color: #64748b; font-size: 14px; }
+        .auth-footer a { color: #2563eb; text-decoration: none; font-weight: 600; }
+        .error-message { background: #fee2e2; border: 1px solid #f87171; color: #b91c1c; padding: 12px; border-radius: 10px; text-align: center; margin-bottom: 16px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="split-layout">
+        <div class="image-pane">
+            <img src="/images/logo/login-page-img.png" alt="Quản Lý Nhà Hàng AI">
+        </div>
+        <div class="form-pane">
+            <div class="auth-header">
+                <h1>Nhà Hàng AI</h1>
+                <p>Khởi tạo tài khoản quản trị · VPS vps-2324802010383</p>
+            </div>
+            <form action="/Admin/Admin/TaoTaiKhoan" method="post">
+                {% if error %}<div class="error-message">{{ error }}</div>{% endif %}
+                <div class="input-group">
+                    <label for="ho_ten">Họ và Tên</label>
+                    <input type="text" id="ho_ten" name="ho_ten" required placeholder="Nhập họ và tên đầy đủ">
+                </div>
+                <div class="input-group">
+                    <label for="sdt">Số Điện Thoại</label>
+                    <input type="tel" id="sdt" name="sdt" required placeholder="Nhập số điện thoại (dùng để đăng nhập)">
+                </div>
+                <div class="input-group">
+                    <label for="mat_khau">Mật Khẩu</label>
+                    <input type="password" id="mat_khau" name="mat_khau" required placeholder="Tạo mật khẩu an toàn">
+                </div>
+                <button type="submit" class="submit-btn">Đăng Ký Ngay</button>
+                <div class="auth-footer">
+                    Đã có tài khoản? <a href="/Admin/Admin/Login">Đăng Nhập</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
